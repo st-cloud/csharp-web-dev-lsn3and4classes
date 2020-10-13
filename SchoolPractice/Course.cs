@@ -24,5 +24,17 @@ and you should use your Student class.*/
             Credits = credits;
             Roster = roster;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Course course &&
+                   Name == course.Name &&
+                   CourseId == course.CourseId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, CourseId);
+        }
     }
 }
