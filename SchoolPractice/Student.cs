@@ -27,24 +27,65 @@ namespace SchoolPractice
             nextStudentId++;
         }
 
-        // TODO: Complete the AddGrade method.
         public void AddGrade(int courseCredits, double grade)
         {
-            // Update the appropriate properties: NumberOfCredits, Gpa
+            double totalQuality = Gpa * NumberOfCredits;
+            double newQuality = grade * courseCredits;
+            totalQuality += newQuality;
+
+            NumberOfCredits += courseCredits;
+            Gpa = totalQuality / NumberOfCredits;
         }
 
-        //TODO: Complete the GetGradeLevel method here:
         public string GetGradeLevel(int credits)
         {
-            // Determine the grade level of the student based on NumberOfCredits
-            return "grade level tbd";
+            if (NumberOfCredits >= 90)
+            {
+                return "Senior";
+            }
+            else if (NumberOfCredits >= 60)
+            {
+                return "Junior";
+            }
+            else if (NumberOfCredits >= 30)
+            {
+                return "Sophomore";
+            }
+            else
+            {
+                return "Freshman";
+            }
         }
 
-        // TODO: Add your custom 'ToString' method here. Make sure it returns a well-formatted string rather
-        //  than just the class fields.
+        public override string ToString()
+        {
+            return Name + " (Student ID: " + StudentId + ", GPA: " + Gpa + ", Credits: " + NumberOfCredits;
+        }
 
-        // TODO: Add your custom 'Equals' method here. Consider which fields should match in order to call two
-        //  Student objects equal.
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+            {
+                return true;
+            }
 
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            Student s = obj as Student;
+            return s.StudentId == StudentId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, StudentId, NumberOfCredits, Gpa);
+        }
     }
 }
